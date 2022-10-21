@@ -38,7 +38,7 @@ publishing {
                         name = 'Hauke Motzkus'
                         email = 'thatsnasu@bitbite.dev'
                         organization = 'bitbite'
-                        organisationUrl = 'https://bitbite.dev'
+                        organizationUrl = 'https://bitbite.dev'
                     }
                 }
                 scm {
