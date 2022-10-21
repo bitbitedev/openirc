@@ -18,7 +18,7 @@ java {
 publishing {
     publications {
         maven(MavenPublication) {
-            from components.JavaLanguageVersion
+            from components.java
             groupId = 'dev.thatsnasu'
             artifactId = 'OpenIRC'
             version = '0.1.0'
