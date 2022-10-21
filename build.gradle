@@ -16,54 +16,54 @@ java {
 }
 
 publishing {
-    publications {
-        maven(MavenPublication) {
-            from components.java
-            groupId = 'dev.thatsnasu'
-            artifactId = 'OpenIRC'
-            version = '0.1.0'
-            pom {
-                name = 'OpenIRC'
-                description = ''
-                url = 'https://github.com/thatsnasu/OpenIRC'
-                licenses {
-                    license {
-                        name = 'MIT License'
-                        url = 'https://github.com/thatsnasu/openirc/blob/main/LICENSE'
-                    }
-                }
-                developers {
-                    developer {
-                        id = 'thatsnasu'
-                        name = 'Hauke Motzkus'
-                        email = 'thatsnasu@bitbite.dev'
-                        organization = 'bitbite'
-                        organizationUrl = 'https://bitbite.dev'
-                    }
-                }
-                scm {
-                    connection = 'scm:git:git://github.com/thatsnasu/openirc.git'
-                    url = 'https://github.com/thatsnasu/openirc'
-                }
-            }
-        }
-    }
-    repositories {
-        maven {
-            name = "OSSRH"
-            credentials {
-                username = System.getEnv("OSSRHUsername");
-                password = System.getEnv("OSSRHPassword");
-            }
-            def releasesRepositoryURL = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            def snapshotRepositoryURL = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-            url = version.endsWith('SNAPSHOT') ? snapshotRepositoryURL : releasesRepositoryURL
-        }
-    }
+	publications {
+		maven(MavenPublication) {
+			from components.java
+			groupId = 'dev.thatsnasu'
+			artifactId = 'OpenIRC'
+			version = '0.1.0'
+			pom {
+				name = 'OpenIRC'
+				description = ''
+				url = 'https://github.com/thatsnasu/openirc'
+				licenses {
+					license {
+						name = 'MIT License'
+						url = 'https://github.com/thatsnasu/openirc/blob/main/LICENSE'
+					}
+				}
+				developers {
+					developer {
+						id = 'thatsnasu'
+						name = 'Hauke Motzkus'
+						email = 'thatsnasu@bitbite.dev'
+						organization = 'bitbite'
+						organizationUrl = 'https://bitbite.dev'
+					}
+				}
+				scm {
+					connection = 'scm:git:git://gihub.com/thatsnasu/openirc.git'
+					url = 'https://github.com/thatsnasu/openirc'
+				}
+			}
+		}
+	}
+	repositories {
+		maven {
+			name = "OSSRH"
+			credentials {
+				username = System.getEnv("ossrhUsername");
+				password = System.getEnv("ossrhPassword");
+			}
+			def releasesRepositoryURL = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+			def snapshotRepositoryURL = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+			url = version.endsWith('SNAPSHOT') ? snapshotRepositoryURL : releasesRepositoryURL
+		}
+	}
 }
 
 signing {
-    sign publishing.publications.maven
+	sign publishing.publications.maven
 }
 
 artifacts {
@@ -82,7 +82,6 @@ repositories {
 }
 
 dependencies {
-    implementation 'dev.bitbite:OpenLogLib:0.3.0'
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
 }
