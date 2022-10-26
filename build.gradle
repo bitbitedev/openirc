@@ -84,6 +84,7 @@ repositories {
 
 dependencies {
 	implementation 'dev.bitbite:OpenLogLib:0.3.0'
+	implementation 'dev.bitbite:OpenNetLib:1.1.0'
 	implementation 'dev.thatsnasu:Ansi:1.1.0'
 
     // Use JUnit Jupiter for testing.
