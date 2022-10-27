@@ -1,4 +1,5 @@
 # OpenIRC - Open source IRC library
+
 [![Build](https://github.com/ThatsNasu/OpenIRC/actions/workflows/gradle.yml/badge.svg?branch=release)](https://github.com/ThatsNasu/OpenIRC/actions/workflows/gradle.yml)
 [![Version](https://img.shields.io/github/v/release/ThatsNasu/OpenIRC?display_name=tag&include_prereleases&label=Release)](https://github.com/ThatsNasu/OpenIRC/releases)
 
@@ -8,17 +9,22 @@ Since the RFC2812 standard superseeded the [RFC1459](https://rfc-editor.org/rfc/
 ---
 
 ## Adding this library as dependency
+
 is pretty straight forward. Just grab the jar file and add it to your projects dependencies, or use one of the following build tools.
 
 ### If you are using gradle
+
 add the following line to your dependencies:
-```
+
+```groovy
 implementation 'dev.thatsnasu:OpenIRC:0.1.0
 ```
 
 ### For Maven
+
 it would be
-```
+
+```xml
 <dependency>
     <groupId>dev.thatsnasu</groupId>
     <artifactId>OpenIRC</artifactId>
@@ -27,4 +33,5 @@ it would be
 ```
 
 ### For everything else
+
 Visit [maven central](https://search.maven.org/artifact/dev.thatsnasu/OpenIRC) and pick the release you like to find the code you need.
