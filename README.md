@@ -10,7 +10,7 @@ Since the RFC2812 standard superseeded the [RFC1459](https://rfc-editor.org/rfc/
 
 ## Disclaimer
 
-As long as there is no [release](https://github.com/thatsnasu/openirc/releases), all the above code snippts for importing this library will NOT work. I will post further updates regarding the status of this library here.
+As long as there is no [release](https://github.com/thatsnasu/openirc/releases), all the below code snippts for importing this library will NOT work. I will post further updates regarding the status of this library here.
 
 ---
 
