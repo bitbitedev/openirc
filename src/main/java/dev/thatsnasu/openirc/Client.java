@@ -30,24 +30,26 @@ public abstract class Client implements Runnable {
 	}
 
 	public final void sendRawLine(String data) {
-		System.out.println("Sending: \""+data+"\" to server");
+		//System.out.println("Sending: \""+data+"\" to server");
 		this.writer.println(data);
 		this.writer.flush();
 	}
 
 	public final void quitServer() {
+		this.onQuitRequest();
 		try {
 			this.reader.close();
 			this.writer.close();
 			this.socket.close();
+			this.onQuit();
 		} catch(IOException e) {
+			this.onQuitFailed();
 			e.printStackTrace();
 		}
-		this.onQuitRequest();
 	}
 
 	protected void sendMessage(String target, String message) {
-		this.sendRawLine("PRIVMSG "+target+" "+message);
+		this.sendRawLine("PRIVMSG "+target+" :"+message);
 	}
 
 	protected void joinChannel(String channel, String password) {
@@ -76,7 +78,7 @@ public abstract class Client implements Runnable {
 	}
 
 	private final boolean handleLine(String line) {
-		System.out.println(line);
+		//System.out.println(line);
 		String[] splits = line.split(" ");
 
 		if(splits[0].equals("PING")) {
@@ -92,21 +94,34 @@ public abstract class Client implements Runnable {
 		String target = splits[2];
 		String content = null;
 		if(line.chars().filter(ch -> ch == ':').count() >= 2) {
-			content = line.substring(line.indexOf(":", line.indexOf(":")+1));
+			content = line.substring(line.indexOf(":", line.indexOf(":")+1)+1);
 		}
 		
 		int exclamation = senderMetaData.indexOf("!");
 		int at = senderMetaData.indexOf("@");
 		if(exclamation > 0 && at > 0 && exclamation < at) {
-			sourceNick = senderMetaData.substring(1, exclamation);
+			sourceNick = senderMetaData.substring(0, exclamation);
 			sourceLogin = senderMetaData.substring(exclamation+1, at);
 			sourceHost = senderMetaData.substring(at+1);
 		}
 
 		switch(response) {
+			case "001":
+				this.onWelcome(sourceNick, target, content);
+				return true;
+			case "002":
+				this.onYourHost(sourceNick, target, content);
+				return true;
+			case "003":
+				this.onCreation(sourceNick, target, content);
+				return true;
 			case "004":
 				this.connected = true; // got server info, so we must be connected;
 				this.onServerInfo(sourceNick, target, content);
+				this.onConnect();
+				return true;
+			case "005":
+				this.onBounce(sourceNick, target, content);
 				return true;
 			case "353":
 				String[] list = content.split(" ");
@@ -114,6 +129,15 @@ public abstract class Client implements Runnable {
 				return true;
 			case "366":
 				this.onEndOfNames();
+				return true;
+			case "372":
+				this.onMessageOfTheDay(sourceNick, target, content);
+				return true;
+			case "375":
+				this.onMessageOfTheDayStart(sourceNick, target, content);
+				return true;
+			case "376":
+				this.onMessageOfTheDayEnd(sourceNick, target, content);
 				return true;
 			case "JOIN":
 				this.onJoin(sourceNick, sourceLogin, sourceHost, target);
@@ -123,6 +147,9 @@ public abstract class Client implements Runnable {
 				return true;
 			case "PRIVMSG":
 				this.onMessage(sourceNick, sourceLogin, sourceHost, target, content);
+				return true;
+			case "NOTICE":
+				// something like notice handling for stuff like "login unsuccessful" and trying to reconnect and such lame bullshit.
 				return true;
 			default:
 				// something like log unknown stuff, maybe firing an onUnknown() event.
@@ -141,13 +168,17 @@ public abstract class Client implements Runnable {
 
 	protected void onDisconnect() {}
 	protected void onQuitRequest() {}
-	protected void onWelcome() {}
-	protected void onYourHost() {}
-	protected void onCreation() {}
+	protected void onQuitFailed() {}
+	protected void onQuit() {}
+	protected void onConnect() {}
+	protected void onWelcome(String sourceNick, String target, String content) {}
+	protected void onYourHost(String sourceNick, String target, String content) {}
+	protected void onCreation(String sourceNick, String target, String content) {}
 	protected void onServerInfo(String sourceNick, String target, String content) {}
-	protected void onMessageOfTheDayStart() {}
-	protected void onMessageOfTheDay() {}
-	protected void onMessageOfTheDayEnd() {}
+	protected void onBounce(String sourceNick, String target, String content) {}
+	protected void onMessageOfTheDayStart(String sourceNick, String target, String content) {}
+	protected void onMessageOfTheDay(String sourceNick, String target, String content) {}
+	protected void onMessageOfTheDayEnd(String sourceNick, String target, String content) {}
 	protected void onJoinAttempt() {}
 	protected void onJoin(String sourceNick, String sourceLogin, String sourceHost, String target) {}
 	protected void onJoinSuccess() {}
@@ -156,4 +187,5 @@ public abstract class Client implements Runnable {
 	protected void onPart(String sourceNick, String sourceLogin, String sourceHost, String target) {}
 	protected void onEndOfNames() {}
 	protected void onMessage(String sourceNick, String sourceLogin, String sourceHost, String target, String content) {}
+	protected void onUnknownResponse(String sourceNick, String sourceLogin, String sourceHost, String target, String content) {}
 }
