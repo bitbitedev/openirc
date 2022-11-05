@@ -8,12 +8,6 @@ Since the RFC2812 standard superseeded the [RFC1459](https://rfc-editor.org/rfc/
 
 ---
 
-## Disclaimer
-
-As long as there is no [release](https://github.com/thatsnasu/openirc/releases), all the below code snippts for importing this library will NOT work. I will post further updates regarding the status of this library here.
-
----
-
 ## Adding this library as dependency
 
 is pretty straight forward. Just grab the jar file and add it to your projects dependencies, or use one of the following build tools.
