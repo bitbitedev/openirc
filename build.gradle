@@ -25,7 +25,7 @@ publishing {
 			version = '0.1.0'
 			pom {
 				name = 'OpenIRC'
-				description = ''
+				description = 'Open source irc library'
 				url = 'https://github.com/thatsnasu/openirc'
 				licenses {
 					license {
@@ -53,8 +53,10 @@ publishing {
 		maven {
 			name = "OSSRH"
 			credentials {
-				username = System.getenv("ossrhUsername");
-				password = System.getenv("ossrhPassword");
+				username = ossrhUsername
+				password = ossrhPassword
+				//username = System.getenv("MAVEN_USERNAME")
+				//password = System.getenv("MAVEN_PASSWORD")
 			}
 			def releasesRepositoryURL = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
 			def snapshotRepositoryURL = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
@@ -83,7 +85,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'dev.bitbite:OpenLogLib:0.3.0'
+	implementation 'dev.bitbite:OpenLogLib:0.4.1'
 	implementation 'dev.bitbite:OpenNetLib:1.1.0'
 	implementation 'dev.thatsnasu:Ansi:1.1.1'
 
