@@ -27,12 +27,13 @@ public abstract class Client implements Runnable {
 
 	public void connect(ConnectionConfiguration connectionConfiguration) throws IOException, IRCException {
 		this.connectionConfiguration = connectionConfiguration;
-		this.socket = new Socket(this.connectionConfiguration.getHost(), this.connectionConfiguration.getPort());
+		this.socket = new Socket(this.connectionConfiguration.host, this.connectionConfiguration.port);
+		this.socket.setSoTimeout(this.connectionConfiguration.timeout);
 		this.reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		this.writer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-		this.sendRawLine("PASS "+this.connectionConfiguration.getAuthentication());
-		this.sendRawLine("NICK "+this.connectionConfiguration.getNickname());
-		this.sendRawLine("USER "+this.connectionConfiguration.getUsername());
+		this.sendRawLine("PASS "+this.connectionConfiguration.authentication);
+		this.sendRawLine("NICK "+this.connectionConfiguration.nickname);
+		this.sendRawLine("USER "+this.connectionConfiguration.username);
 	}
 
 	public final void sendRawLine(String data) {
@@ -76,7 +77,7 @@ public abstract class Client implements Runnable {
 			}
 		} catch (IOException e) {
 			this.connected = false;
-			this.onDisconnect();
+			this.onDisconnect(this.connectionConfiguration.host, e);
 		}
 	}
 
@@ -189,7 +190,7 @@ public abstract class Client implements Runnable {
 		this.sendRawLine("PONG "+token);
 	}
 
-	protected void onDisconnect() {}
+	protected void onDisconnect(String host, Exception e) {}
 	protected void onQuitRequest() {}
 	protected void onQuitFailed() {}
 	protected void onQuit() {}
