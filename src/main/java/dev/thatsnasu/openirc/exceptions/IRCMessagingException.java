@@ -1,9 +1,9 @@
 package dev.thatsnasu.openirc.exceptions;
 
-public class MalformedAddressException extends Exception {
+public class IRCMessagingException extends Exception {
 	private static final long serialVersionUID = 1L;
 	
-	public MalformedAddressException(String message) {
+	public IRCMessagingException(String message) {
 		super(message);
 	}
 }
