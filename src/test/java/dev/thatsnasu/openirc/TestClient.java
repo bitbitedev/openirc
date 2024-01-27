@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import dev.thatsnasu.openirc.exceptions.IRCMessagingException;
+import dev.thatsnasu.openirc.exceptions.MessagingException;
 
 public class TestClient {
 	private static IRCServer ircServer;
@@ -48,11 +48,11 @@ public class TestClient {
 	@Test
 	@DisplayName("Client sendMessage")
 	public void sendMessage() {
-		assertThrows(IRCMessagingException.class, ()-> TestClient.ircClient.sendMessage(null, null));
-		assertThrows(IRCMessagingException.class, ()-> TestClient.ircClient.sendMessage(null, ""));
-		assertThrows(IRCMessagingException.class, ()-> TestClient.ircClient.sendMessage("", null));
-		assertThrows(IRCMessagingException.class, ()-> TestClient.ircClient.sendMessage("", ""));
-		assertThrows(IRCMessagingException.class, ()-> TestClient.ircClient.sendMessage(null, "Hello World!"));
+		assertThrows(MessagingException.class, ()-> TestClient.ircClient.sendMessage(null, null));
+		assertThrows(MessagingException.class, ()-> TestClient.ircClient.sendMessage(null, ""));
+		assertThrows(MessagingException.class, ()-> TestClient.ircClient.sendMessage("", null));
+		assertThrows(MessagingException.class, ()-> TestClient.ircClient.sendMessage("", ""));
+		assertThrows(MessagingException.class, ()-> TestClient.ircClient.sendMessage(null, "Hello World!"));
 
 		assertDoesNotThrow(() -> TestClient.ircClient.sendMessage("thatsnasu", "Hello World!"));
 		assertDoesNotThrow(() -> TestClient.ircClient.sendMessage("#thatsnasu", "Hello World!"));
