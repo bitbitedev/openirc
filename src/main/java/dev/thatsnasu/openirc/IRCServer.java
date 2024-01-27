@@ -11,15 +11,17 @@ public class IRCServer extends Server {
 	private Charset charset;
 	private CommandHandler commandHandler;
 	private MessageHandler messageHandler;
+	private UserManager userManager;
 
 	public IRCServer(int port) {
 		super(port);
 		this.commandHandler = new CommandHandler("dev.thatsnasu.openirc.commands");
 		this.messageHandler = new MessageHandler();
+		this.userManager = new UserManager();
 	}
 	
 	public void initialize() {
-		this.commandHandler.loadCommands();
+		this.commandHandler.loadCommands(this);
 		
 		this.start();
 	}
@@ -49,5 +51,9 @@ public class IRCServer extends Server {
 	
 	public Charset getCharset() {
 		return ((this.charset == null) ? Charset.defaultCharset(): this.charset);
+	}
+	
+	public UserManager getUserManager() {
+		return this.userManager;
 	}
 }
