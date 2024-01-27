@@ -7,7 +7,7 @@ public abstract class Command {
 		this.identifier = new Identifier(numeric, named);
 	}
 	
-	public abstract boolean handle(String parameters);
+	public abstract boolean handle(Message message);
 	
 	@Override
 	public String toString() {

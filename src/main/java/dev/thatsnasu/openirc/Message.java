@@ -6,27 +6,32 @@ import dev.thatsnasu.openirc.exceptions.MessagePrefixException;
 public class Message {
 	public String prefix;
 	public String command;
-	public String[] parameters;
+	public String parameters;
 	
-	public Message(String prefix, String command, String[] parameters) throws MessagePrefixException {
-		if(!prefix.equals("") && !prefix.startsWith(":")) throw new MessagePrefixException("Message prefix must start with a colon (\":\")");
-		if(!prefix.equals("") && prefix.contains(" ")) throw new MessagePrefixException("Message prefix must not contain any whitespaces");
+	public Message(String prefix, String command, String parameters) throws MessagePrefixException, MessageLengthExceededException {
+		if(!prefix.equals("") && !prefix.startsWith(":"))
+			throw new MessagePrefixException("Message prefix must start with a colon (\":\")");
+		
+		if(!prefix.equals("") && prefix.contains(" "))
+			throw new MessagePrefixException("Message prefix must not contain any whitespaces");
+		
+		if(!prefix.equals("") && (prefix.length()+command.length()+parameters.length()+4) > 512)
+			throw new MessageLengthExceededException("Exceeded maximum length for messages, only 510 characters are allowed.");
+		
+		if((command.length()+parameters.length()+3) > 512)
+			throw new MessageLengthExceededException("Exceeded maximum length for messages, only 510 characters are allowed.");
 		
 		this.prefix = prefix;
 		this.command = command;
 		this.parameters = parameters;
 	}
 	
-	public String getMessageString() throws MessageLengthExceededException {
+	public String getMessageString() {
 		String message = "";
 		message += (!this.prefix.equals("")) ? this.prefix+" " : "";
 		message += this.command;
-		for(String parameter : this.parameters) {
-			message += " "+parameter;
-		}
+		message += " "+this.parameters;
 		message += "\r\n";
-		
-		if(message.length() > 512) throw new MessageLengthExceededException("Exceeded maximum length for messages, only 510 characters are allowed.");
 		
 		return message;
 	}

@@ -3,15 +3,18 @@ package dev.thatsnasu.openirc;
 import java.nio.charset.Charset;
 
 import dev.bitbite.networking.Server;
-import dev.thatsnasu.openirc.exceptions.UnknownCommandException;
+import dev.thatsnasu.openirc.exceptions.MessageLengthExceededException;
+import dev.thatsnasu.openirc.exceptions.MessagePrefixException;
 
 public class IRCServer extends Server {
 	private Charset charset;
 	private CommandHandler commandHandler;
+	private MessageHandler messageHandler;
 
 	public IRCServer(int port) {
 		super(port);
 		this.commandHandler = new CommandHandler("dev.thatsnasu.openirc.commands");
+		this.messageHandler = new MessageHandler();
 	}
 	
 	public void initialize() {
@@ -23,8 +26,12 @@ public class IRCServer extends Server {
 	@Override
 	protected void processReceivedData(String clientAddress, byte[] data) {
 		try {
-			this.commandHandler.processMessage(new String(data, this.charset));
-		} catch (UnknownCommandException e) {
+			Message message = this.messageHandler.tokenize(new String(data, this.charset));
+			
+			this.commandHandler.processMessage(message);
+		} catch (MessagePrefixException e) {
+			e.printStackTrace();
+		} catch (MessageLengthExceededException e) {
 			e.printStackTrace();
 		}
 	}

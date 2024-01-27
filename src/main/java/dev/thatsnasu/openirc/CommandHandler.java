@@ -3,7 +3,6 @@ package dev.thatsnasu.openirc;
 import java.util.HashMap;
 
 import dev.thatsnasu.openirc.exceptions.DuplicateCommandException;
-import dev.thatsnasu.openirc.exceptions.UnknownCommandException;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfo;
 import io.github.classgraph.ClassInfoList;
@@ -21,6 +20,10 @@ public class CommandHandler {
 		this.commands = new HashMap<Identifier, Command>();
 		this.numericIdentifiers = new HashMap<String, Identifier>();
 		this.namedIdentifiers = new HashMap<String, Identifier>();
+	}
+	
+	public void processMessage(Message message) {
+		
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -53,7 +56,7 @@ public class CommandHandler {
 	}
 	
 	private void registerCommand(Command command) throws DuplicateCommandException {
-		if(this.numericIdentifiers.containsKey(command.identifier.numeric)) throw new DuplicateCommandException("Command \""+command+"\" already registered");
+		//if(this.numericIdentifiers.containsKey(command.identifier.numeric)) throw new DuplicateCommandException("Command \""+command+"\" already registered");
 		if(this.namedIdentifiers.containsKey(command.identifier.named)) throw new DuplicateCommandException("Command \""+command+"\" already registered");
 		
 		this.commands.put(command.identifier, command);
@@ -61,9 +64,5 @@ public class CommandHandler {
 		this.numericIdentifiers.put(command.identifier.numeric, command.identifier);
 	}
 	
-	public boolean processMessage(String message) throws UnknownCommandException {
-		System.out.println(message);
-		
-		return false;
-	}
+	
 }
