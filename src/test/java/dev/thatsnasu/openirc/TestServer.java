@@ -9,6 +9,7 @@ import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.StandardCharsets;
 import java.nio.charset.UnsupportedCharsetException;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,5 +40,13 @@ public class TestServer {
 		
 		TestServer.ircServer.setCharset("UTF-8");
 		assertEquals(StandardCharsets.UTF_8, TestServer.ircServer.getCharset());
+	}
+	
+	@AfterAll
+	@DisplayName("Teardown and cleanup of server testing environment")
+	public static void shutdownTestEnvironment() {
+		TestServer.ircClient.close();
+		
+		TestServer.ircServer.close();
 	}
 }
