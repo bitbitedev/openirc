@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 import dev.bitbite.networking.Server;
 import dev.thatsnasu.openirc.exceptions.MessageLengthExceededException;
 import dev.thatsnasu.openirc.exceptions.MessagePrefixException;
+import dev.thatsnasu.openirc.exceptions.UnknownCommandException;
 
 public class IRCServer extends Server {
 	private Charset charset;
@@ -32,6 +33,8 @@ public class IRCServer extends Server {
 		} catch (MessagePrefixException e) {
 			e.printStackTrace();
 		} catch (MessageLengthExceededException e) {
+			e.printStackTrace();
+		} catch (UnknownCommandException e) {
 			e.printStackTrace();
 		}
 	}
