@@ -28,7 +28,7 @@ public class TestServer {
 	}
 	
 	@Test
-	@DisplayName("Client Charset handling")
+	@DisplayName("Server Charset handling")
 	public void charsetHandling() {
 		assertThrows(IllegalCharsetNameException.class, () ->TestServer.ircServer.setCharset(""), "Empty strings are not allowed as charsets");
 		assertThrows(UnsupportedCharsetException.class, () ->TestServer.ircServer.setCharset("asdf"), "Undefined charsets are not allowed / provided charsetname could not be resolved to a charset.");
