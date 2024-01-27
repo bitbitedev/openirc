@@ -4,7 +4,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 import dev.bitbite.networking.Client;
-import dev.thatsnasu.openirc.exceptions.IRCMessagingException;
+import dev.thatsnasu.openirc.exceptions.MessagingException;
 
 public class IRCClient extends Client {
 	private Charset charset;
@@ -22,11 +22,11 @@ public class IRCClient extends Client {
 		
 	}
 	
-	public void sendMessage(String target, String message) throws IRCMessagingException {
-		if(target == null) throw new IRCMessagingException("Could not process message, target is null.");
-		if(target.equals("")) throw new IRCMessagingException("Could not process message, target is empty.");
-		if(message == null) throw new IRCMessagingException("Could not process message, null given.");
-		if(message.equals("")) throw new IRCMessagingException("Could not process message, empty string given.");
+	public void sendMessage(String target, String message) throws MessagingException {
+		if(target == null) throw new MessagingException("Could not process message, target is null.");
+		if(target.equals("")) throw new MessagingException("Could not process message, target is empty.");
+		if(message == null) throw new MessagingException("Could not process message, null given.");
+		if(message.equals("")) throw new MessagingException("Could not process message, empty string given.");
 		
 		// checks passed
 		this.send(message.getBytes((this.charset == null) ? Charset.defaultCharset() : this.charset));
