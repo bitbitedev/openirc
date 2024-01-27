@@ -5,10 +5,6 @@ import dev.thatsnasu.openirc.exceptions.MessagePrefixException;
 
 public class MessageHandler {
 	
-	public MessageHandler() {
-		
-	}
-	
 	
 	public Message tokenize(String message) throws MessagePrefixException, MessageLengthExceededException {
 		String prefix = "";
