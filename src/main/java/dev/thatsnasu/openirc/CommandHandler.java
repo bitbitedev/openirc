@@ -1,5 +1,6 @@
 package dev.thatsnasu.openirc;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 import dev.thatsnasu.openirc.exceptions.DuplicateCommandException;
@@ -27,8 +28,8 @@ public class CommandHandler {
 		System.out.println(message.getMessageString());
 		
 		
-		if(!this.numericIdentifiers.containsKey(message.command)) throw new UnknownCommandException("Unknown command: \""+message.command+"\"");
-		if(!this.namedIdentifiers.containsKey(message.command)) throw new UnknownCommandException("Unknown command: \""+message.command+"\"");
+		if(!this.numericIdentifiers.containsKey(message.command) && !this.namedIdentifiers.containsKey(message.command))
+			throw new UnknownCommandException("Unknown command: \""+message.command+"\"");
 		
 		Identifier identifier = null;
 		if(this.numericIdentifiers.containsKey(message.command)) identifier = this.numericIdentifiers.get(message.command);
@@ -37,8 +38,7 @@ public class CommandHandler {
 		this.commands.get(identifier).handle(message);
 	}
 	
-	@SuppressWarnings("deprecation")
-	public void loadCommands() {
+	public void loadCommands(IRCServer server) {
 		try (ScanResult scanResult = new ClassGraph()
 				.verbose()
 				.enableAllInfo()
@@ -53,7 +53,7 @@ public class CommandHandler {
 				if(!Command.class.isAssignableFrom(scannedClass)) continue;
 				@SuppressWarnings("unchecked")
 				Class<? extends Command> commandClass = (Class<? extends Command>) scannedClass;
-				this.registerCommand(commandClass.newInstance());
+				this.registerCommand(commandClass.getDeclaredConstructor(IRCServer.class).newInstance(server));
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -63,11 +63,19 @@ public class CommandHandler {
 			e.printStackTrace();
 		} catch (DuplicateCommandException e) {
 			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
 		}
 	}
 	
 	private void registerCommand(Command command) throws DuplicateCommandException {
-		if(this.numericIdentifiers.containsKey(command.identifier.numeric)) throw new DuplicateCommandException("Command \""+command+"\" already registered");
+		if(!command.identifier.numeric.equals("") && this.numericIdentifiers.containsKey(command.identifier.numeric)) throw new DuplicateCommandException("Command \""+command+"\" already registered");
 		if(this.namedIdentifiers.containsKey(command.identifier.named)) throw new DuplicateCommandException("Command \""+command+"\" already registered");
 		
 		this.commands.put(command.identifier, command);
