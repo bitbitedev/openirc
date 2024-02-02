@@ -86,7 +86,7 @@ repositories {
 
 dependencies {
 	implementation 'dev.thatsnasu:Ansi:1.1.1'
-	implementation 'dev.bitbite:OpenNetLib:2.0.0'
+	implementation 'dev.bitbite:OpenNetLib:2.0.1'
 	implementation 'dev.bitbite:OpenLogLib:0.4.1'
 	implementation 'io.github.classgraph:classgraph:4.8.165'
 
