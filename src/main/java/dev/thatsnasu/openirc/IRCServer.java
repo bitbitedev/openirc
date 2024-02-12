@@ -50,14 +50,13 @@ public class IRCServer extends Server {
 		 * 							The prefix is a string that does not contain any spaces and starts with a colon.
 		 * 							The prefix is captured without the colon
 		 * 							The prefix, if present must contain at least one character
-		 * ([^: ]+){1} 			- matches the command, and captures it. 
-		 * 							The command is a string that does not start with a colon (so that it doesn't get captured as a prefix)
-		 * 							and does not contain any spaces.
+		 * ([A-Z]+|[0-9]{3}){1} - matches the command, and captures it. 
+		 * 							The command can be either a sequence of uppercase letters, or a string of 3 digits
 		 * 							There must be exactly one command
 		 * (?:[ ]+(.*))?$ 		- matches the parameters, and captures them. 
 		 * 							The parameters can contain any character
 		 */
-		Pattern messagePattern = Pattern.compile("^(?::([^ ]+?)[ ]+)?([^: ]+){1}(?:[ ]+(.*))?$");
+		Pattern messagePattern = Pattern.compile("^(?::([^ ]+?)[ ]+)?([A-Z]+|[0-9]{3}){1}(?:[ ]+(.*))?$");
 		Matcher matcher = messagePattern.matcher(message);
 
 		if(matcher.find()){
