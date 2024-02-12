@@ -5,6 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import dev.bitbite.networking.Server;
+import dev.thatsnasu.openirc.exceptions.MalformedMessageException;
 import dev.thatsnasu.openirc.exceptions.MessageLengthExceededException;
 import dev.thatsnasu.openirc.exceptions.MessagePrefixException;
 import dev.thatsnasu.openirc.exceptions.UnknownCommandException;
@@ -31,7 +32,7 @@ public class IRCServer extends Server {
 		Message message = null;
 		try {
 			message = parseMessage(new String(data, getCharset()));
-		} catch (MessagePrefixException | MessageLengthExceededException e) {
+		} catch (MessagePrefixException | MessageLengthExceededException | MalformedMessageException e) {
 			e.printStackTrace(); // TODO send error code
 		}
 		if(message != null){
@@ -43,7 +44,7 @@ public class IRCServer extends Server {
 		}
 	}
 
-	private Message parseMessage(String message) throws MessagePrefixException, MessageLengthExceededException {
+	protected static Message parseMessage(String message) throws MessagePrefixException, MessageLengthExceededException, MalformedMessageException {
 		Pattern messagePattern = Pattern.compile("^(:(.*?) )?([^: ][^ ]+){1}( (.*))?$");
 		Matcher matcher = messagePattern.matcher(message);
 
@@ -54,7 +55,7 @@ public class IRCServer extends Server {
 
 			return new Message(prefix, command, params);
 		}
-		return null;
+		throw new MalformedMessageException("Message could not be parsed");
 	}
 	
 	public void setCharset(Charset charset) {
