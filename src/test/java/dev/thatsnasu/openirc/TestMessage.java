@@ -25,14 +25,14 @@ public class TestMessage {
 	@Test
 	@DisplayName("Message length checks")
 	public void lengthChecks() {
-		assertThrows(MessageLengthExceededException.class, () -> new Message("prefix", "command",
+		assertThrows(MessageLengthExceededException.class, () -> new Message("prefix", "COMMAND",
 			"ZOrk2e0nDCmQmvmn5MYbqs9owSX8qKFchVYJYKGqWCynjjaw10SGuOszffmLMr43u0LmUOMm25lS83NGOvIOlYitM3SFbC5"
 			+ "yBx7yHTH8qFfIFBKKbk1hFjm6e6SmPk2J7cNB0f3gVuiLzWancom26mJQ9vzZE7TyTDGv5hAWwkF9aa98EZO9AtA3fy0J"
 			+ "4uXB26QuQCI2G2sR8LAvgNXcFUJ59bQ8fXheRnwoB6ZKiL0cwGLOkoOLrmM2oNuuw4zfY4XS3USB683Qbhwdky3y7jawm"
 			+ "IqIsj5QB3Kmc917WIHESeiD2y4d4SUucTpCROVQawCuz31fxiTaX9zxMW1pzChPRxYvpsGxLr3iSEl4hjIDquZx84W2n5"
 			+ "oWCYiqw3J27A1UvAdJ5dE7n315EcMybNX64XRCsPd0IlFPeYaWqp4ajnOnjTk8y4YfCqvN7Jq1Wy5oz7ca2p8n6mgdSVL"
 			+ "cHIn9bgA29y4n8RnK2FuFcExrqpWab"));
-		assertThrows(MessageLengthExceededException.class, () -> new Message(null, "command",
+		assertThrows(MessageLengthExceededException.class, () -> new Message(null, "COMMAND",
 			"Bj62IX83J6OVLA5mFd0hkZCtWUGyXt09pFHCtIQ61ksU06RsCakL4fNU9cmRuQIFdDYbgAZY9rrURQENEdMUpQq2IqOE0EBR"
 			+ "L7ClHwcgaGiLdA9KuRYvqwoeXj59Mmpg2JOwepcLAmgyVtKT0TEysOg8zBAph9L6mzvYxveMEqjnqA0SgFx6h1XKeraH0f"
 			+ "nxegESV6XlahhCHqwT0yhEpu8LEihwqaRuiN3INSkipbgBo1kae8KRMeZDY1zcz4oz7eypJ3uUULbw5ZT6xlS0K5dBOHGf"

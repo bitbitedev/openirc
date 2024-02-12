@@ -59,6 +59,18 @@ public class TestServer {
 			assertEquals("COMMAND", message.command);
 			assertNull(message.parameters);
 
+			// Test correct parsing of simple 3-digit command without prefix and parameters
+			assertDoesNotThrow(() -> IRCServer.parseMessage("123"));
+			message = IRCServer.parseMessage("123");
+
+			assertNull(message.prefix);
+			assertEquals("123", message.command);
+			assertNull(message.parameters);
+
+			// Test that lowercase letters or a non-3-digit code are not allowed as command
+			assertThrows(MalformedMessageException.class, () -> IRCServer.parseMessage("command"));
+			assertThrows(MalformedMessageException.class, () -> IRCServer.parseMessage("1234"));
+
 			// Test correct parsing of Command with prefix
 			assertDoesNotThrow(() -> IRCServer.parseMessage(":prefix COMMAND"));
 			message = IRCServer.parseMessage(":prefix COMMAND");
@@ -91,13 +103,8 @@ public class TestServer {
 			assertEquals("COMMAND", message.command);
 			assertEquals("multiple params", message.parameters);
 
-			// Test correct parsing of Command with malformed prefix and multiple params (prefix without ":" should not be recognized as prefix)
-			assertDoesNotThrow(() -> IRCServer.parseMessage("prefix COMMAND multiple params"));
-			message = IRCServer.parseMessage("prefix COMMAND multiple params");
-
-			assertNull(message.prefix);
-			assertEquals("prefix", message.command);
-			assertEquals("COMMAND multiple params", message.parameters);
+			// Test that a message without a malformed prefix is not allowed
+			assertThrows(MalformedMessageException.class, () -> IRCServer.parseMessage("prefix COMMAND multiple params"));
 		} catch (MessagePrefixException | MessageLengthExceededException | MalformedMessageException e) {
 			e.printStackTrace();
 		}
