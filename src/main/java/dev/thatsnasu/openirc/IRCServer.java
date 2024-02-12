@@ -46,17 +46,18 @@ public class IRCServer extends Server {
 
 	protected static Message parseMessage(String message) throws MessagePrefixException, MessageLengthExceededException, MalformedMessageException {
 		/*
-		 * ^(?::([^ ]+?) ) 	- matches the start of the line, and captures the prefix (if present). 
-		 * 						The prefix is a string that does not contain any spaces and starts with a colon.
-		 * 						The prefix is captured without the colon
-		 * 						The prefix, if present must contain at least one character
-		 * ([^: ][^ ]+){1} 	- matches the command, and captures it. 
-		 * 						The command is a string that does not start with a colon (so that it doesn't get captured as a prefix)
-		 * 						and does not contain any spaces
-		 * (?: (.*))?$ 		- matches the parameters, and captures them. 
-		 * 						The parameters can contain any character
+		 * ^(?::([^ ]+?)[ ]+)? 	- matches the start of the line, and captures the prefix (if present). 
+		 * 							The prefix is a string that does not contain any spaces and starts with a colon.
+		 * 							The prefix is captured without the colon
+		 * 							The prefix, if present must contain at least one character
+		 * ([^: ]+){1} 			- matches the command, and captures it. 
+		 * 							The command is a string that does not start with a colon (so that it doesn't get captured as a prefix)
+		 * 							and does not contain any spaces.
+		 * 							There must be exactly one command
+		 * (?:[ ]+(.*))?$ 		- matches the parameters, and captures them. 
+		 * 							The parameters can contain any character
 		 */
-		Pattern messagePattern = Pattern.compile("^(?::([^ ]+?) )?([^: ][^ ]+){1}(?: (.*))?$");
+		Pattern messagePattern = Pattern.compile("^(?::([^ ]+?)[ ]+)?([^: ]+){1}(?:[ ]+(.*))?$");
 		Matcher matcher = messagePattern.matcher(message);
 
 		if(matcher.find()){
