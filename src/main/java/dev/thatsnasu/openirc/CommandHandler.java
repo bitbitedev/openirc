@@ -24,7 +24,7 @@ public class CommandHandler {
 		this.namedIdentifiers = new HashMap<String, Identifier>();
 	}
 	
-	public void processMessage(Message message) throws UnknownCommandException {
+	public void process(Message message) throws UnknownCommandException {
 		System.out.println(message.getMessageString());
 		
 		

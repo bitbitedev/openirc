@@ -1,6 +1,8 @@
 package dev.thatsnasu.openirc;
 
 import java.nio.charset.Charset;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import dev.bitbite.networking.Server;
 import dev.thatsnasu.openirc.exceptions.MessageLengthExceededException;
@@ -10,13 +12,11 @@ import dev.thatsnasu.openirc.exceptions.UnknownCommandException;
 public class IRCServer extends Server {
 	private Charset charset;
 	private CommandHandler commandHandler;
-	private MessageHandler messageHandler;
 	private UserManager userManager;
 
 	public IRCServer(int port) {
 		super(port);
 		this.commandHandler = new CommandHandler("dev.thatsnasu.openirc.commands");
-		this.messageHandler = new MessageHandler();
 		this.userManager = new UserManager();
 	}
 	
@@ -28,17 +28,33 @@ public class IRCServer extends Server {
 
 	@Override
 	protected void processReceivedData(String clientAddress, byte[] data) {
+		Message message = null;
 		try {
-			Message message = this.messageHandler.tokenize(new String(data, this.charset));
-			
-			this.commandHandler.processMessage(message);
-		} catch (MessagePrefixException e) {
-			e.printStackTrace();
-		} catch (MessageLengthExceededException e) {
-			e.printStackTrace();
-		} catch (UnknownCommandException e) {
-			e.printStackTrace();
+			message = parseMessage(new String(data, getCharset()));
+		} catch (MessagePrefixException | MessageLengthExceededException e) {
+			e.printStackTrace(); // TODO send error code
 		}
+		if(message != null){
+			try {
+				this.commandHandler.process(message);
+			} catch (UnknownCommandException e) {
+				e.printStackTrace(); // TODO send error code
+			}
+		}
+	}
+
+	private Message parseMessage(String message) throws MessagePrefixException, MessageLengthExceededException {
+		Pattern messagePattern = Pattern.compile("^(:(.*?) )?([^: ][^ ]+){1}( (.*))?$");
+		Matcher matcher = messagePattern.matcher(message);
+
+		if(matcher.find()){
+			String prefix = matcher.group(2);
+			String command = matcher.group(3);
+			String params = matcher.group(5);
+
+			return new Message(prefix, command, params);
+		}
+		return null;
 	}
 	
 	public void setCharset(Charset charset) {
