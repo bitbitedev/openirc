@@ -7,6 +7,6 @@ module dev.thatsnasu.openirc {
 	
 	requires transitive dev.thatsnasu.ansi;
 	requires transitive dev.bitbite.openloglib;
-	requires transitive OpenNetLib;
-	requires transitive io.github.classgraph;
+	requires dev.bitbite.opennetlib;
+	requires io.github.classgraph;
 }
