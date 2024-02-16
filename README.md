@@ -1,7 +1,7 @@
 # OpenIRC - Open source IRC library
 
-[![Build](https://github.com/ThatsNasu/OpenIRC/actions/workflows/gradle.yml/badge.svg?branch=release)](https://github.com/ThatsNasu/OpenIRC/actions/workflows/gradle.yml)
-[![Version](https://img.shields.io/github/v/release/ThatsNasu/OpenIRC?display_name=tag&include_prereleases&label=Release)](https://github.com/ThatsNasu/OpenIRC/releases)
+[![Build](https://github.com/bitbitedev/openirc/actions/workflows/gradle.yml/badge.svg?branch=release)](https://github.com/bitbitedev/openirc/actions/workflows/gradle.yml)
+[![Version](https://img.shields.io/github/v/release/bitbitedev/openirc?display_name=tag&include_prereleases&label=Release)](https://github.com/bitbitedev/openirc/releases)
 
 This Library implements IRC functionality based on the RFC1459 standard, which can be found [here](https://rfc-editor.org/rfc/rfc1459).
 
