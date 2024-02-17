@@ -1,4 +1,4 @@
-package dev.thatsnasu.openirc;
+package dev.bitbite.openirc;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,7 +14,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import dev.thatsnasu.openirc.exceptions.MessagingException;
+import dev.bitbite.openirc.IRCClient;
+import dev.bitbite.openirc.IRCServer;
+import dev.bitbite.openirc.exceptions.MessagingException;
 
 public class TestClient {
 	private static IRCServer ircServer;

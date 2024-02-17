@@ -1,8 +1,8 @@
-package dev.thatsnasu.openirc;
+package dev.bitbite.openirc;
 
-import dev.thatsnasu.openirc.exceptions.MalformedMessageException;
-import dev.thatsnasu.openirc.exceptions.MessageLengthExceededException;
-import dev.thatsnasu.openirc.exceptions.MessagePrefixException;
+import dev.bitbite.openirc.exceptions.MalformedMessageException;
+import dev.bitbite.openirc.exceptions.MessageLengthExceededException;
+import dev.bitbite.openirc.exceptions.MessagePrefixException;
 
 public class Message {
 	public String prefix;

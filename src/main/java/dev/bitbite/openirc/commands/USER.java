@@ -1,9 +1,9 @@
-package dev.thatsnasu.openirc.commands;
+package dev.bitbite.openirc.commands;
 
-import dev.thatsnasu.openirc.Command;
-import dev.thatsnasu.openirc.IRCServer;
-import dev.thatsnasu.openirc.Message;
-import dev.thatsnasu.openirc.User;
+import dev.bitbite.openirc.Command;
+import dev.bitbite.openirc.IRCServer;
+import dev.bitbite.openirc.Message;
+import dev.bitbite.openirc.User;
 
 public class USER extends Command {
 
