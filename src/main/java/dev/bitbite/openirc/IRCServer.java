@@ -1,14 +1,14 @@
-package dev.thatsnasu.openirc;
+package dev.bitbite.openirc;
 
 import java.nio.charset.Charset;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import dev.bitbite.networking.Server;
-import dev.thatsnasu.openirc.exceptions.MalformedMessageException;
-import dev.thatsnasu.openirc.exceptions.MessageLengthExceededException;
-import dev.thatsnasu.openirc.exceptions.MessagePrefixException;
-import dev.thatsnasu.openirc.exceptions.UnknownCommandException;
+import dev.bitbite.openirc.exceptions.MalformedMessageException;
+import dev.bitbite.openirc.exceptions.MessageLengthExceededException;
+import dev.bitbite.openirc.exceptions.MessagePrefixException;
+import dev.bitbite.openirc.exceptions.UnknownCommandException;
 
 public class IRCServer extends Server {
 	private Charset charset;

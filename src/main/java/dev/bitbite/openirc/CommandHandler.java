@@ -1,10 +1,10 @@
-package dev.thatsnasu.openirc;
+package dev.bitbite.openirc;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
-import dev.thatsnasu.openirc.exceptions.DuplicateCommandException;
-import dev.thatsnasu.openirc.exceptions.UnknownCommandException;
+import dev.bitbite.openirc.exceptions.DuplicateCommandException;
+import dev.bitbite.openirc.exceptions.UnknownCommandException;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfo;
 import io.github.classgraph.ClassInfoList;

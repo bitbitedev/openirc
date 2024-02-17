@@ -1,4 +1,4 @@
-package dev.thatsnasu.openirc;
+package dev.bitbite.openirc;
 
 import java.util.HashMap;
 

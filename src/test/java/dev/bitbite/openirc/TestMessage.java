@@ -1,4 +1,4 @@
-package dev.thatsnasu.openirc;
+package dev.bitbite.openirc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -6,9 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import dev.thatsnasu.openirc.exceptions.MalformedMessageException;
-import dev.thatsnasu.openirc.exceptions.MessageLengthExceededException;
-import dev.thatsnasu.openirc.exceptions.MessagePrefixException;
+import dev.bitbite.openirc.Message;
+import dev.bitbite.openirc.exceptions.MalformedMessageException;
+import dev.bitbite.openirc.exceptions.MessageLengthExceededException;
+import dev.bitbite.openirc.exceptions.MessagePrefixException;
 
 public class TestMessage {
 	

@@ -1,10 +1,10 @@
-package dev.thatsnasu.openirc;
+package dev.bitbite.openirc;
 
 import java.net.URL;
 import java.nio.charset.Charset;
 
 import dev.bitbite.networking.Client;
-import dev.thatsnasu.openirc.exceptions.MessagingException;
+import dev.bitbite.openirc.exceptions.MessagingException;
 
 public class IRCClient extends Client {
 	private Charset charset;
