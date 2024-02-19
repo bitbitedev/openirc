@@ -15,9 +15,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import dev.bitbite.openirc.IRCClient;
-import dev.bitbite.openirc.IRCServer;
-import dev.bitbite.openirc.Message;
 import dev.bitbite.openirc.exceptions.MalformedMessageException;
 import dev.bitbite.openirc.exceptions.MessageLengthExceededException;
 import dev.bitbite.openirc.exceptions.MessagePrefixException;
