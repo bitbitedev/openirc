@@ -5,19 +5,17 @@ import dev.bitbite.openirc.IRCServer;
 import dev.bitbite.openirc.Message;
 import dev.bitbite.openirc.User;
 
-public class NICK extends Command {
-
-	public NICK(IRCServer server) {
-		super(server, "", "NICK");
-	}
+public class NICK implements Command {
 
 	@Override
-	public void handle(Message message) {
+	public String handle(IRCServer server, Message message) {
 		String nickname = message.parameters.split(" ")[0];
 		
-		if(this.server.getUserManager().getUserByNick(nickname) != null) {}// already in use exception
+		if(server.getUserManager().getUserByNick(nickname) != null) {}// already in use exception
 		
 		User user = new User(nickname);
-		this.server.getUserManager().arriveUser(nickname, user);
+		server.getUserManager().arriveUser(nickname, user);
+
+		return "";
 	}
 }

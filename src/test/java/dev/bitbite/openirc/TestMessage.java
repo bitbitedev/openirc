@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import dev.bitbite.openirc.Message;
 import dev.bitbite.openirc.exceptions.MalformedMessageException;
 import dev.bitbite.openirc.exceptions.MessageLengthExceededException;
 import dev.bitbite.openirc.exceptions.MessagePrefixException;

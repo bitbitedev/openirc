@@ -1,12 +1,11 @@
 /**
- *  Nothing to see here
+ * The module-info.java file for the OpenIRC library.
  */
-module dev.thatsnasu.openirc {
+module dev.bitbite.openirc {
 	exports dev.bitbite.openirc;
 	exports dev.bitbite.openirc.exceptions;
 	
-	requires transitive dev.thatsnasu.ansi;
-	requires transitive dev.bitbite.openloglib;
+	requires dev.thatsnasu.ansi;
 	requires dev.bitbite.opennetlib;
 	requires io.github.classgraph;
 }

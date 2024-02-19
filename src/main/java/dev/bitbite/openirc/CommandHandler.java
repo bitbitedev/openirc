@@ -13,34 +13,30 @@ import io.github.classgraph.ScanResult;
 public class CommandHandler {
 	private String packageName;
 	
+	private IRCServer ircServer;
 	private HashMap<Identifier, Command> commands;
-	private HashMap<String, Identifier> numericIdentifiers;
-	private HashMap<String, Identifier> namedIdentifiers;
 	
-	public CommandHandler(String packageName) {
+	public CommandHandler(IRCServer ircServer, String packageName) {
+		this.ircServer = ircServer;
 		this.packageName = packageName;
 		this.commands = new HashMap<Identifier, Command>();
-		this.numericIdentifiers = new HashMap<String, Identifier>();
-		this.namedIdentifiers = new HashMap<String, Identifier>();
 	}
 	
 	public void process(Message message) throws UnknownCommandException {
-		System.out.println(message.getMessageString());
+		Identifier identifier = Identifier.of(message.command);
+		if(identifier == null)
+			throw new UnknownCommandException("Command \""+message.command+"\" not found");
 		
-		
-		if(!this.numericIdentifiers.containsKey(message.command) && !this.namedIdentifiers.containsKey(message.command))
-			throw new UnknownCommandException("Unknown command: \""+message.command+"\"");
-		
-		Identifier identifier = null;
-		if(this.numericIdentifiers.containsKey(message.command)) identifier = this.numericIdentifiers.get(message.command);
-		if(this.namedIdentifiers.containsKey(message.command)) identifier = this.namedIdentifiers.get(message.command);
-		
-		this.commands.get(identifier).handle(message);
+		Command command = this.commands.get(identifier);
+		if(command == null)
+			throw new UnknownCommandException("Command \""+message.command+"\" not found");
+
+		this.commands.get(identifier).handle(this.ircServer, message);
 	}
 	
-	public void loadCommands(IRCServer server) {
+	public void loadCommands() {
 		try (ScanResult scanResult = new ClassGraph()
-				.verbose()
+				// .verbose()
 				.enableAllInfo()
 				.acceptPackages(this.packageName)
 				.scan())
@@ -53,7 +49,9 @@ public class CommandHandler {
 				if(!Command.class.isAssignableFrom(scannedClass)) continue;
 				@SuppressWarnings("unchecked")
 				Class<? extends Command> commandClass = (Class<? extends Command>) scannedClass;
-				this.registerCommand(commandClass.getDeclaredConstructor(IRCServer.class).newInstance(server));
+				this.registerCommand(
+					Identifier.valueOf(commandClass.getSimpleName()), 
+					commandClass.getDeclaredConstructor().newInstance());
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -74,13 +72,15 @@ public class CommandHandler {
 		}
 	}
 	
-	private void registerCommand(Command command) throws DuplicateCommandException {
-		if(!command.identifier.numeric.equals("") && this.numericIdentifiers.containsKey(command.identifier.numeric)) throw new DuplicateCommandException("Command \""+command+"\" already registered");
-		if(this.namedIdentifiers.containsKey(command.identifier.named)) throw new DuplicateCommandException("Command \""+command+"\" already registered");
+	private void registerCommand(Identifier identifier, Command command) throws DuplicateCommandException {
+		if(identifier == null)
+			throw new IllegalArgumentException("Identifier cannot be null");
+
+		if(this.commands.containsKey(identifier))
+			throw new DuplicateCommandException("Command \""+identifier.name()+"\" already exists");
 		
-		this.commands.put(command.identifier, command);
-		this.namedIdentifiers.put(command.identifier.named, command.identifier);
-		this.numericIdentifiers.put(command.identifier.numeric, command.identifier);
+		System.out.println("Registering command "+identifier.name());
+		this.commands.put(identifier, command);
 	}
 	
 	
