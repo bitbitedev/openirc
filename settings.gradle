@@ -7,4 +7,8 @@
  * in the user manual at https://docs.gradle.org/7.2/userguide/multi_project_builds.html
  */
 
-rootProject.name = 'OpenIRC'
+rootProject.name = 'openirc'
+
+include (':openloglib')
+
+project(':openloglib').projectDir = new File('../../bitbite/openloglib')

@@ -14,6 +14,7 @@ java {
 	}
     withJavadocJar()
     withSourcesJar()
+    modularity.inferModulePath = true
 }
 
 publishing {
@@ -21,10 +22,10 @@ publishing {
 		maven(MavenPublication) {
 			from components.java
 			groupId = 'dev.thatsnasu'
-			artifactId = 'OpenIRC'
+			artifactId = 'openirc'
 			version = '0.1.0'
 			pom {
-				name = 'OpenIRC'
+				name = 'openirc'
 				description = 'Open source irc library'
 				url = 'https://github.com/thatsnasu/openirc'
 				licenses {
@@ -87,8 +88,9 @@ repositories {
 dependencies {
 	implementation 'dev.thatsnasu:Ansi:1.1.1'
 	implementation 'dev.bitbite:OpenNetLib:2.0.0'
-	implementation 'dev.bitbite:OpenLogLib:0.4.1'
 	implementation 'io.github.classgraph:classgraph:4.8.165'
+	
+	implementation project(':openloglib')
 
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
