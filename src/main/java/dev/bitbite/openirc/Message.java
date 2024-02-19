@@ -39,7 +39,8 @@ public class Message {
 		this.parameters = parameters;
 	}
 	
-	public String getMessageString() {
+	@Override
+	public String toString() {
 		String message = "";
 		if(this.prefix != null)
 			message += ":"+this.prefix+" ";

@@ -1,18 +1,8 @@
 package dev.bitbite.openirc;
 
-public abstract class Command {
-	public final Identifier identifier;
-	protected IRCServer server;
+@FunctionalInterface
+public interface Command {
+
+	public abstract String handle(IRCServer server, Message message);
 	
-	public Command(IRCServer server, String numeric, String named) {
-		this.server = server;
-		this.identifier = new Identifier(numeric, named);
-	}
-	
-	public abstract void handle(Message message);
-	
-	@Override
-	public String toString() {
-		return this.identifier.named+" ("+this.identifier.numeric+")";
-	}
 }

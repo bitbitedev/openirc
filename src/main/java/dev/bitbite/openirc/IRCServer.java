@@ -17,31 +17,34 @@ public class IRCServer extends Server {
 
 	public IRCServer(int port) {
 		super(port);
-		this.commandHandler = new CommandHandler("dev.thatsnasu.openirc.commands");
+		this.commandHandler = new CommandHandler(this, "dev.bitbite.openirc.commands");
 		this.userManager = new UserManager();
 	}
 	
-	public void initialize() {
-		this.commandHandler.loadCommands(this);
-		
-		this.start();
+	@Override
+	public void start() {
+		this.commandHandler.loadCommands();
+		super.start();
 	}
 
 	@Override
 	protected void processReceivedData(String clientAddress, byte[] data) {
+		System.out.println(new String(data, getCharset()));
 		Message message = null;
 		try {
 			message = parseMessage(new String(data, getCharset()));
-		} catch (MessagePrefixException | MessageLengthExceededException | MalformedMessageException e) {
-			e.printStackTrace(); // TODO send error code
-		}
+		} catch (MessagePrefixException | MessageLengthExceededException | MalformedMessageException e) {}
 		if(message != null){
 			try {
 				this.commandHandler.process(message);
 			} catch (UnknownCommandException e) {
-				e.printStackTrace(); // TODO send error code
+				this.send(clientAddress, "421 :Unknown command");
 			}
 		}
+	}
+
+	public void send(String clientAddress, String message) {
+		this.send(clientAddress, message.getBytes(this.getCharset()));
 	}
 
 	protected static Message parseMessage(String message) throws MessagePrefixException, MessageLengthExceededException, MalformedMessageException {
@@ -78,7 +81,7 @@ public class IRCServer extends Server {
 	}
 	
 	public Charset getCharset() {
-		return ((this.charset == null) ? Charset.defaultCharset(): this.charset);
+		return ((this.charset == null) ? Charset.defaultCharset() : this.charset);
 	}
 	
 	public UserManager getUserManager() {

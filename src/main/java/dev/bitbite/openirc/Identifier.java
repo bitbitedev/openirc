@@ -1,11 +1,29 @@
 package dev.bitbite.openirc;
 
-public class Identifier {
-	public final String numeric;
-	public final String named;
+public enum Identifier {
+
+	CAP(null),
+	NICK(null),
+	USER(null);
+
+	private String numeric;
 	
-	public Identifier(String numeric, String named) {
+	Identifier(String numeric) {
 		this.numeric = numeric;
-		this.named = named;
+	}
+
+	public static Identifier of(String identifier) {
+		if(valueOf(identifier) != null)
+			return valueOf(identifier);
+
+		for(Identifier i : Identifier.values())
+			if(i.getNumeric() != null && i.getNumeric().equals(identifier))
+				return i;
+
+		return null;
+	}
+
+	public String getNumeric() {
+		return this.numeric;
 	}
 }
