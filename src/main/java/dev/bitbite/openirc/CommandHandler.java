@@ -43,8 +43,6 @@ public class CommandHandler {
 		{
 			ClassInfoList routeClassInfoList = scanResult.getAllClasses();
 			for(ClassInfo routeClassInfo : routeClassInfoList) {
-				System.out.println(routeClassInfo.getName());
-				
 				Class<?> scannedClass = Class.forName(routeClassInfo.getName());
 				if(!Command.class.isAssignableFrom(scannedClass)) continue;
 				@SuppressWarnings("unchecked")
@@ -79,7 +77,6 @@ public class CommandHandler {
 		if(this.commands.containsKey(identifier))
 			throw new DuplicateCommandException("Command \""+identifier.name()+"\" already exists");
 		
-		System.out.println("Registering command "+identifier.name());
 		this.commands.put(identifier, command);
 	}
 	
