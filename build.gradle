@@ -88,7 +88,7 @@ dependencies {
 	implementation 'dev.thatsnasu:Ansi:1.1.1'
 	implementation 'dev.bitbite:OpenNetLib:2.0.2'
 	implementation 'dev.bitbite:OpenLogLib:0.4.1'
-	implementation 'io.github.classgraph:classgraph:4.8.172'
+	implementation 'io.github.classgraph:classgraph:4.8.174'
 
     // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
