@@ -91,7 +91,7 @@ dependencies {
 	implementation 'io.github.classgraph:classgraph:4.8.179'
 
     // Use JUnit Jupiter for testing.
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.3'
 }
 
 tasks.named('test') {
